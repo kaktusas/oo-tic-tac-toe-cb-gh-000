@@ -141,7 +141,7 @@ def play
 end
 
 def position_taken?(index)
-  !(@board[index] == nil || @board[index] == " ")
+  !(@board[index] == "" || @board[index] == " ")
 end
 
 end
