@@ -1,12 +1,12 @@
 class TicTacToe
 
-  def initialize 
+  def initialize
     @@board = Array.new(9, " ")
   end
 
   WIN_COMBINATIONS = [[0,1,2], [3,4,5], [6,7,8], [0,3,6], [1,4,7], [2,5,8], [0,4,8], [2,4,6]]
 
-  def won?(@board)
+  def won?
   WIN_COMBINATIONS.find do |combination|
     win_index1 = combination[0]
     win_index2 = combination[1]
@@ -22,10 +22,10 @@ class TicTacToe
   end
 end
 
-def full?(@board)
+def full?
   i = 0
   while i < 9
-    if !position_taken?(@board, i)
+    if !position_taken?(i)
       return false
     end
     i += 1
@@ -33,17 +33,17 @@ def full?(@board)
   return true
 end
 
-def draw?(@board)
-  !won?(@board) && full?(@board)
+def draw?
+  !won? && full?
 end
 
-def over?(@board)
-  won?(@board) || full?(@board) || draw?(@board)
+def over?
+  won? || full? || draw?
 end
 
-def winner(@board)
-  if won?(@board)
-    combination = won?(@board)
+def winner
+  if won?
+    combination = won?
     index = combination[0]
     position = @board[index]
     if position == "X"
@@ -56,15 +56,15 @@ def winner(@board)
   end
 end
 
-def valid_move?(@board, index, ch)
-  if !position_taken?(@board, index) && index.between?(-1, 9)
+def valid_move?(index, ch)
+  if !position_taken?(index) && index.between?(-1, 9)
     true
   else
     false
   end
 end
 
-def display_@board(@board)
+def display_board
   puts " #{@board[0]} | #{@board[1]} | #{@board[2]} "
   puts "-----------"
   puts " #{@board[3]} | #{@board[4]} | #{@board[5]} "
@@ -80,30 +80,30 @@ def input_to_index(input)
   end
 end
 
-def move(@board, index, ch)
+def move(index, ch)
   @board[index.to_i] = ch
 end
 
-def valid_move?(@board, index)
-  if position_taken?(@board, index) == false && index >= 0 && index <= 8
+def valid_move?(index)
+  if position_taken?(index) == false && index >= 0 && index <= 8
     return true
   else
     return false
   end
 end
 
-def turn_count(@board)
+def turn_count
   count = 0
   for i in 0..8
-    if position_taken?(@board, i)
+    if position_taken?(i)
       count += 1
     end
   end
   return count
 end
 
-def current_player(@board)
-  if turn_count(@board) % 2 == 0
+def current_player
+  if turn_count % 2 == 0
     return "X"
   else
     return "O"
@@ -111,16 +111,16 @@ def current_player(@board)
 end
 
 
-def turn(@board)
-  ch = current_player(@board)
+def turn
+  ch = current_player
   moved = false
   while moved == false
   puts "Please enter 1-9:"
   input = gets.strip
   index = input_to_index(input)
-  if valid_move?(@board, index)
-    move(@board, index, ch)
-    display_@board(@board)
+  if valid_move?(index)
+    move(index, ch)
+    display_board
     moved = true
   else
     puts "Invalid input, try again: "
@@ -128,16 +128,16 @@ def turn(@board)
 end
 end
 
-def play(@board)
-  until over?(@board) do
-    turn(@board)
+def play
+  until over? do
+    turn
   end
 
-  if won?(@board)
-    puts "Congratulations #{winner(@board)}!"
+  if won?
+    puts "Congratulations #{winner}!"
   else
     puts "Cat's Game!"
   end
 end
-  
+
 end
